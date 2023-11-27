@@ -1,9 +1,11 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
 import MovieDetails from "../components/movieDetails/";
+import MovieRecommendationsPage from "../components/movieRecommendations/";
 import MovieCreditsPage from "../components/movieCredits/";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/tmdb-api'
+import { getMovieRecommendations } from '../api/tmdb-api'
 import { getMovieCredits } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
@@ -21,12 +23,18 @@ const MoviePage = (props) => {
     getMovie
   );
 
-  if (movieLoading || creditsLoading) {
+  const { data: movieRecommendation, error: movieRecommendationError, isLoading: movieRecommendationLoading, isError: movieRecommendationIsError } = useQuery(
+    ["movieRecommedation", { id: id }],
+    getMovieRecommendations
+  );
+  console.log("Movies recommendation prop:", movieRecommendation)
+
+  if (movieLoading || creditsLoading || movieRecommendationLoading) {
     return <Spinner />;
   }
 
-  if (movieIsError || creditsIsError) {
-    return <h1>{movieError.message || creditsError.message}</h1>;
+  if (movieIsError || creditsIsError || movieRecommendationIsError) {
+    return <h1>{movieError.message || creditsError.message || movieRecommendationError.message}</h1>;
   }
 
   return (
@@ -36,6 +44,7 @@ const MoviePage = (props) => {
           <PageTemplate movie={movie}>
             <MovieDetails movie={movie} />
             <MovieCreditsPage credits={credits} />
+            <MovieRecommendationsPage movies={movieRecommendation} />
           </PageTemplate>
         </>
       ) : (

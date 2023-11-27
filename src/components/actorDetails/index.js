@@ -7,7 +7,9 @@ import { Link } from 'react-router-dom';
 
 const ActorDetails = ({ person, credits }) => {
     const [biography, setShowBiography] = useState(false);
-
+    if (!person || !credits) {
+        return <div>Error with person or movies</div>;
+    }
     const handleShowBiography = () => {
         setShowBiography(!biography);
     };

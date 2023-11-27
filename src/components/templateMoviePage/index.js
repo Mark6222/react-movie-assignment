@@ -13,6 +13,10 @@ const TemplateMoviePage = ({ movie, children }) => {
         getMovieImages
     );
 
+    if (!movie) {
+        return <div>Error with movie</div>;
+    }
+
     if (isLoading) {
         return <Spinner />;
     }

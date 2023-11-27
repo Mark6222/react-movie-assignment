@@ -3,23 +3,23 @@ import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getPersonImages } from "../../api/tmdb-api";
+import { getTvShowImages } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
-const TemplateActorPage = ({ person, children }) => {
+const TemplateTvShowDetailsPage = ({ show, children }) => {
 
     const { data, error, isLoading, isError } = useQuery(
-        ["images", { name: person.id }],
-        getPersonImages
+        ["images", { id: show.id }],
+        getTvShowImages
 
     );
 
-    if (!person) {
+    if (!show) {
         return <div>Error with movies</div>;
     }
 
-    if (!person || !person.id) {
+    if (!show || !show.id) {
         return <h1>No information available for this person.</h1>;
     }
 
@@ -30,11 +30,11 @@ const TemplateActorPage = ({ person, children }) => {
     if (isError) {
         return <h1>{error.message}</h1>;
     }
-    const images = data.profiles
+    const images = data.posters
 
     return (
         <>
-            <MovieHeader movie={person} />
+            <MovieHeader movie={show} />
             <Grid container spacing={5} sx={{ padding: "15px" }}>
                 <Grid item xs={3}>
                     <div sx={{
@@ -63,4 +63,4 @@ const TemplateActorPage = ({ person, children }) => {
     );
 };
 
-export default TemplateActorPage;
+export default TemplateTvShowDetailsPage;

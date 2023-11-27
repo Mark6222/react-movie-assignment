@@ -20,9 +20,11 @@ const root = {
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie, credits }) => {  // Don't miss this!
+const MovieDetails = ({ movie }) => {  // Don't miss this!
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  if (!movie) {
+    return <div>Error with the movie</div>;
+  }
   return (
     <>
       <Typography variant="h5" component="h3">

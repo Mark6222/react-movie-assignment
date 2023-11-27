@@ -9,6 +9,10 @@ function MovieListPageTemplate({ movies, title, action }) {
     const [genreFilter, setGenreFilter] = useState("0");
     const genreId = Number(genreFilter);
 
+    if (!movies) {
+        return <div>Error with movies</div>;
+    }
+
     let displayedMovies = movies
         .filter((m) => {
             return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;

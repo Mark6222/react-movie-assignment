@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import Header from "../headerMovieList";
-import FilterCard from "../filterMoviesCard";
+import FilterCard from "../filterActorsCard";
 import ActorList from "../ActorList";
 import Grid from "@mui/material/Grid";
 
 function ActorListPageTemplate({ actors, title, action }) {
     const [nameFilter, setNameFilter] = useState("");
-    if(!Array.isArray(actors)){
+
+    if (!Array.isArray(actors)) {
         return <div>Error: invalid actors data</div>
     }
-    let displayedActors = actors.filter((actor) => { return actor.name.toLowerCase().search(nameFilter.toLowerCase()) !== -1;})
+    let displayedActors = actors
+        .filter((actor) => {
+            return actor.name.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
+        })
+
 
     const handleChange = (type, value) => {
         if (type === "name") setNameFilter(value);

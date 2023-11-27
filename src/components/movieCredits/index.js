@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from 'react-router-dom';
 
 const MovieCreditsPage = ({ credits }) => {
+    console.log("Movies credits prop:", credits)
     if (!credits || !credits.cast) {
         return null;
     }
